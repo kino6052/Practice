@@ -4,6 +4,14 @@ var authRef = new Firebase("https://torrid-torch-3843.firebaseio.com/.info/authe
 
 var EMAIL = '';
 
+authRef.on("value", function(snap) {
+  if (snap.val() === true) {
+    alert("authenticated");
+  } else {
+    alert("not authenticated");
+  }
+});
+
 chatRef/*.orderByChild('name').equalTo('email@email.com')*/.on("child_added", function(snap) {
    displayMessages(snap); 
 });
@@ -16,7 +24,7 @@ var sendMessage = function(message){
 var displayMessages = function(snap){
   if (snap.val()) {
         //alert("Child Added");
-        $('#messages').append('<li>' + JSON.stringify(snap.val()) + '</li>')
+        $('#messages').append('<div class="panel panel-default"><div class="panel-body"><div class="media"><div class="media-left media-middle"><a href="#">Picture Goes Here<img class="media-object" src="" alt=""></a></div><div class="media-body"><h4 class="media-heading">' + snap.val().name + '</h4><p>' + snap.val().text + '</p></div></div></div>');
     } else {
         //alert("Child not Added?");
     }
